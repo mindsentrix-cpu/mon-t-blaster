@@ -40,9 +40,11 @@ mon-t-blaster/
 - [v1.5] Auto-Fire shop upgrade (hold screen = continuous fire, 150c lvl1 / 300c lvl2)
 - [v1.6] Speed upgrade steps smoothed to +2 each (3/5/7/9); shop scroll fixed on iPhone
 - [v1.7] Auto-fire is single unlock (500c); fire cadence controlled by speed upgrade
+  - Sin upgrade: 2 disp/seg | Lvl1: 2.5 | Lvl2: 3.3 | Lvl3: 5 disp/seg
 - [v1.4] Projectile base speed lowered to 3 -- slower at start, upgrades matter more
 - [v1.5] Auto-Fire shop upgrade (hold screen = continuous fire, 150c lvl1 / 300c lvl2)
 - [v1.6] Speed upgrade steps smoothed to +2 each (3/5/7/9); shop scroll fixed on iPhone
 - [v1.7] Auto-fire is single unlock (500c); fire cadence controlled by speed upgrade
+  - Sin upgrade: 2 disp/seg | Lvl1: 2.5 | Lvl2: 3.3 | Lvl3: 5 disp/seg
 - [v1.4] Projectile base speed lowered to 3 — much slower feel at start
 - [v1.4] Projectile base speed lowered to 3 — much slower feel at start
