@@ -19,7 +19,7 @@ mon-t-blaster/
 └── README.md
 
 ## Commit Rules (follow every time)
-- Always update PROJECT_STATUS.md on every commit
+- Always update PROJECT_STATUS.md + README.md + WORKFLOW.md on every commit
 - Format: "vX.X - [area]: description of change"
 - Areas: feat | fix | refactor | assets | balance
 - Example: "v1.2 - fix: bonus coin no longer deals damage"
@@ -30,3 +30,9 @@ mon-t-blaster/
 - [ ] Real sprite PNGs from Leonardo AI
 - [ ] High score persistence (localStorage)
 - [ ] PWA support for mobile install
+
+## Completed Features
+- [v1.0] Full game in HTML5 Canvas (3 lanes, shoot, dodge, upgrades shop)
+- [v1.1] HTML / CSS / JS split into separate files
+- [v1.2] Projectile speed rebalanced — upgrades now feel meaningful
+- [v1.3] Main menu responsive for iPhone (safe areas, 100dvh, viewport-fit)
