@@ -1,0 +1,384 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Rajdhani', sans-serif;
+    overflow: hidden;
+  }
+
+  #wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 390px;
+    height: 100vh;
+    max-height: 700px;
+    overflow: hidden;
+    border: 1px solid #00D9FF33;
+    box-shadow: 0 0 60px #00D9FF22, inset 0 0 60px #00000088;
+  }
+
+  canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* HUD */
+  #hud {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 16px 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .hud-box {
+    background: #07090F99;
+    border: 1px solid #00D9FF33;
+    border-radius: 8px;
+    padding: 6px 14px;
+    backdrop-filter: blur(4px);
+  }
+
+  .hud-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    color: #00D9FF88;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .hud-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .hud-coins .hud-value { color: #F59E0B; }
+
+  /* LIVES */
+  #livesHud {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    pointer-events: none;
+    z-index: 10;
+    align-items: center;
+  }
+
+  .shield {
+    width: 36px;
+    height: 36px;
+    position: relative;
+    transition: transform 0.2s;
+  }
+
+  .shield svg {
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s, filter 0.3s;
+  }
+
+  .shield.lost svg {
+    opacity: 0.15;
+    filter: none;
+  }
+
+  .shield svg {
+    filter: drop-shadow(0 0 6px #00D9FF) drop-shadow(0 0 12px #00D9FF88);
+  }
+
+  /* Screen flash on life lost */
+  #flash {
+    position: absolute;
+    inset: 0;
+    background: #FF3B5C;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 18;
+    transition: opacity 0.08s;
+  }
+
+  /* SCREENS */
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    background: #07090Fdd;
+    backdrop-filter: blur(8px);
+  }
+
+  .screen.hidden { display: none; }
+
+  .game-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 36px;
+    font-weight: 900;
+    color: #00D9FF;
+    letter-spacing: 6px;
+    text-shadow: 0 0 30px #00D9FF, 0 0 60px #00D9FF88;
+    margin-bottom: 4px;
+  }
+
+  .game-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    color: #00C89688;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+
+  .legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 48px;
+    width: 280px;
+  }
+
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff08;
+    border: 1px solid #ffffff11;
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+
+  .legend-icon { font-size: 20px; }
+
+  .legend-text {
+    color: #8b9ab0;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .legend-text strong { color: #e6edf3; }
+
+  .btn-start {
+    background: linear-gradient(135deg, #00C896, #00D9FF);
+    border: none;
+    border-radius: 12px;
+    padding: 16px 48px;
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: #07090F;
+    cursor: pointer;
+    box-shadow: 0 0 30px #00C89666;
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+
+  .btn-start:active {
+    transform: scale(0.97);
+    box-shadow: 0 0 15px #00C89644;
+  }
+
+  .over-score {
+    font-family: 'Orbitron', monospace;
+    font-size: 64px;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 40px #00D9FF;
+    margin: 8px 0;
+  }
+
+  .over-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #00D9FF88;
+    margin-bottom: 4px;
+  }
+
+  .over-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 28px;
+    font-weight: 900;
+    color: #FF3B5C;
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px #FF3B5C;
+    margin-bottom: 32px;
+  }
+
+  /* combo popup */
+  #combo {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Orbitron', monospace;
+    font-size: 20px;
+    font-weight: 900;
+    color: #F59E0B;
+    text-shadow: 0 0 20px #F59E0B;
+    pointer-events: none;
+    z-index: 15;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  /* SHOP */
+  #shopScreen {
+    position: absolute;
+    inset: 0;
+    background: #07090Fee;
+    backdrop-filter: blur(10px);
+    z-index: 25;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 20px;
+    overflow-y: auto;
+  }
+  #shopScreen.hidden { display: none; }
+
+  .shop-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 20px;
+    font-weight: 900;
+    color: #00D9FF;
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px #00D9FF88;
+    margin-bottom: 4px;
+  }
+
+  .shop-wallet {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #FFD70022;
+    border: 1px solid #FFD70055;
+    border-radius: 20px;
+    padding: 6px 16px;
+    margin-bottom: 20px;
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 900;
+    color: #FFD700;
+  }
+
+  .upgrade-card {
+    width: 100%;
+    background: #0d1520;
+    border: 1px solid #1a2535;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .upgrade-icon {
+    font-size: 28px;
+    width: 44px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .upgrade-info { flex: 1; }
+
+  .upgrade-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #e6edf3;
+    letter-spacing: 1px;
+  }
+
+  .upgrade-desc {
+    font-size: 12px;
+    color: #5a7090;
+    margin-top: 2px;
+  }
+
+  .upgrade-levels {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  .lvl-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #00D9FF55;
+    background: transparent;
+    transition: background 0.2s;
+  }
+  .lvl-dot.active { background: #00D9FF; border-color: #00D9FF; box-shadow: 0 0 6px #00D9FF; }
+
+  .btn-upgrade {
+    background: linear-gradient(135deg, #00C896, #00D9FF);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    font-weight: 900;
+    color: #07090F;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .btn-upgrade:disabled {
+    background: #1a2535;
+    color: #3a4a5a;
+    cursor: not-allowed;
+  }
+
+  .btn-upgrade .cost {
+    font-size: 9px;
+    opacity: 0.8;
+  }
+
+  .btn-upgrade.maxed {
+    background: #F59E0B22;
+    color: #F59E0B;
+    border: 1px solid #F59E0B55;
+    cursor: default;
+  }
+
+  .btn-close-shop {
+    margin-top: 8px;
+    background: transparent;
+    border: 1px solid #00D9FF44;
+    border-radius: 10px;
+    padding: 12px 40px;
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #00D9FF;
+    cursor: pointer;
+    width: 100%;
+  }

@@ -4,7 +4,7 @@
 https://mindsentrix-cpu.github.io/mon-t-blaster/
 
 ## 📌 Current Version
-v1.0
+v1.1
 
 ## ✅ Completed
 - [2026-03-22] v1.0 — Initial project structure
@@ -12,6 +12,10 @@ v1.0
 - [2026-03-22] assets/sprites/ and assets/audio/ folders created
 - [2026-03-22] src/game.js placeholder created
 - [2026-03-22] GitHub Pages enabled
+- [2026-03-22] v1.1 — Refactored: HTML/CSS/JS split into separate files
+- [2026-03-22] assets/css/style.css created (all styles)
+- [2026-03-22] assets/js/game.js created (all game logic)
+- [2026-03-22] WORKFLOW.md added (development conventions)
 
 ## 🔄 In Progress
 - Nothing currently
@@ -22,6 +26,7 @@ v1.0
 - [ ] Add audio assets
 - [ ] Power-ups system (double shot, slow motion, shield)
 - [ ] Sound effects
+- [ ] High score persistence (localStorage)
 - [ ] Mobile PWA support
 - [ ] App Store / Google Play (Godot migration)
 
@@ -29,6 +34,8 @@ v1.0
 | Date | Version | Description |
 |------|---------|-------------|
 | 2026-03-22 | v1.0 | Initial structure + full game upload |
+| 2026-03-22 | v1.0 | Add PROJECT_STATUS.md — change tracking initialized |
+| 2026-03-22 | v1.1 | Refactor: split HTML/CSS/JS + add WORKFLOW.md |
 
 ---
 **Rule: Update this file on every single commit going forward.**
