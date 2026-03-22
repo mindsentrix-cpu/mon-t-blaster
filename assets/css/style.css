@@ -9,6 +9,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    min-height: 100dvh;
     font-family: 'Rajdhani', sans-serif;
     overflow: hidden;
   }
@@ -18,7 +19,7 @@
     width: 100%;
     max-width: 390px;
     height: 100vh;
-    max-height: 700px;
+    height: 100dvh;
     overflow: hidden;
     border: 1px solid #00D9FF33;
     box-shadow: 0 0 60px #00D9FF22, inset 0 0 60px #00000088;
@@ -35,7 +36,7 @@
   #hud {
     position: absolute;
     top: 0; left: 0; right: 0;
-    padding: 16px 20px 0;
+    padding: max(16px, env(safe-area-inset-top)) 20px 0;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -72,7 +73,7 @@
   /* LIVES */
   #livesHud {
     position: absolute;
-    bottom: 20px;
+    bottom: max(20px, env(safe-area-inset-bottom));
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -126,13 +127,15 @@
     z-index: 20;
     background: #07090Fdd;
     backdrop-filter: blur(8px);
+    padding: max(16px, env(safe-area-inset-top)) 20px max(16px, env(safe-area-inset-bottom));
+    overflow-y: auto;
   }
 
   .screen.hidden { display: none; }
 
   .game-title {
     font-family: 'Orbitron', monospace;
-    font-size: 36px;
+    font-size: clamp(28px, 8vw, 36px);
     font-weight: 900;
     color: #00D9FF;
     letter-spacing: 6px;
@@ -146,15 +149,15 @@
     color: #00C89688;
     letter-spacing: 4px;
     text-transform: uppercase;
-    margin-bottom: 48px;
+    margin-bottom: clamp(24px, 5vh, 48px);
   }
 
   .legend {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 48px;
-    width: 280px;
+    margin-bottom: clamp(24px, 5vh, 48px);
+    width: min(280px, 90%);
   }
 
   .legend-row {
