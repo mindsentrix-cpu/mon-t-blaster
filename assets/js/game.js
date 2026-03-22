@@ -745,7 +745,7 @@ function getUpgradeValue(key) {
 }
 
 function getProjectileDamage() { return 1 + UPGRADES.damage.current; }
-function getProjectileSpeed()  { return 6 + UPGRADES.speed.current * 6; }
+function getProjectileSpeed()  { return 3 + UPGRADES.speed.current * 4; }
 function getStartLives()       { return 3 + UPGRADES.shield.current; }
 function hasMagnet()           { return UPGRADES.magnet.current > 0; }
 
