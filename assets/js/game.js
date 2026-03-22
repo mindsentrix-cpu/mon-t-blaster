@@ -501,7 +501,12 @@ function drawParticles() {
 }
 
 // ─── INPUT STATE ─────────────────────────────────────────────────────────────
-let touchStart = null;
+let touchStart    = null;
+let isHolding     = false;
+let holdPos       = null;
+let holdFireTimer = 0;
+let holdStartTime = 0;
+const HOLD_DETECT_MS = 180; // ms before hold is treated as auto-fire, not tap
 
 // ─── COMBO DISPLAY ───────────────────────────────────────────────────────────
 let comboTimeout;
@@ -535,6 +540,7 @@ function gameLoop(ts) {
   drawObstacles();
   updatePlayer(dt);
   drawPlayer();
+  updateHoldFire(dt);
   updateProjectiles();
   drawProjectiles();
   updateParticles(dt);
@@ -552,6 +558,7 @@ function startGame() {
   spawnTimer = 0; spawnInterval = 130;
   difficulty = 1; obstaclesKilled = 0;
   worldSpeed = 2.2;
+  isHolding = false; holdPos = null; holdFireTimer = 0;
   player.lane = 1;
   player.x = LANES[1];
   player.targetX = LANES[1];
@@ -643,20 +650,27 @@ canvas.addEventListener('touchend',   e => { e.preventDefault(); handleEnd(getPo
 
 function handleStart(pos) {
   if (state !== 'running') return;
-  touchStart = pos;
+  touchStart     = pos;
+  holdPos        = pos;
+  holdStartTime  = performance.now();
+  isHolding      = true;
+  holdFireTimer  = getAutoFireRate(); // first auto-shot fires after one interval
 }
 
 function handleMove(pos) {
   if (!touchStart) return;
-  // Solo tracking de posición para detectar swipe — sin aim line
+  holdPos = pos; // keep aim updated while holding
 }
 
 function handleEnd(pos) {
+  isHolding = false;
+  holdPos   = null;
   if (!touchStart || state !== 'running') { touchStart = null; return; }
 
   const dx = pos.x - touchStart.x;
   const dy = pos.y - touchStart.y;
   const isHorizontalSwipe = Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy) * 1.4;
+  const wasQuickTap = (performance.now() - holdStartTime) < HOLD_DETECT_MS;
 
   if (isHorizontalSwipe) {
     // CAMBIO DE CARRIL
@@ -666,15 +680,27 @@ function handleEnd(pos) {
       player.lane = Math.min(2, player.lane + 1);
     }
     player.targetX = LANES[player.lane];
-  } else {
-    // DISPARO hacia donde tocaste
+  } else if (wasQuickTap || !hasAutoFire()) {
+    // DISPARO único — tap rápido, o no tiene auto-fire desbloqueado
     const fromX = player.x;
     const fromY = player.y - player.r;
     fireProjectile(pos.x - fromX, pos.y - fromY);
     spawnTapRing(pos.x, pos.y);
   }
+  // Si tenía auto-fire activo y fue un hold largo → auto-fire ya disparó, nada extra
 
   touchStart = null;
+}
+
+// ─── AUTO-FIRE HOLD ───────────────────────────────────────────────────────────
+function updateHoldFire(dt) {
+  if (!isHolding || !holdPos || !hasAutoFire() || state !== 'running') return;
+  holdFireTimer -= dt;
+  if (holdFireTimer <= 0) {
+    holdFireTimer = getAutoFireRate();
+    fireProjectile(holdPos.x - player.x, holdPos.y - (player.y - player.r));
+    spawnTapRing(holdPos.x, holdPos.y);
+  }
 }
 
 // ─── TAP RING EFFECT ─────────────────────────────────────────────────────────
@@ -735,6 +761,13 @@ const UPGRADES = {
     ],
     current: 0, max: 2,
   },
+  autofire: {
+    levels: [
+      { desc: 'Mantén presionado para disparar', cost: 150 },
+      { desc: 'Cadencia doble al mantener',      cost: 300 },
+    ],
+    current: 0, max: 2,
+  },
 };
 
 // Monedas persistentes (acumuladas entre partidas)
@@ -748,6 +781,8 @@ function getProjectileDamage() { return 1 + UPGRADES.damage.current; }
 function getProjectileSpeed()  { return 3 + UPGRADES.speed.current * 4; }
 function getStartLives()       { return 3 + UPGRADES.shield.current; }
 function hasMagnet()           { return UPGRADES.magnet.current > 0; }
+function hasAutoFire()         { return UPGRADES.autofire.current > 0; }
+function getAutoFireRate()     { return UPGRADES.autofire.current >= 2 ? 0.18 : 0.35; }
 
 function renderShop() {
   document.getElementById('shopCoins').textContent = totalCoins;
