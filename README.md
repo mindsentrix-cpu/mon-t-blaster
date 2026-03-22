@@ -6,7 +6,7 @@ Play here: https://mindsentrix-cpu.github.io/mon-t-blaster
 Built by William Montalvo
 
 ## Current Version
-v1.5
+v1.6
 
 ## Changelog
 | Version | Description |
@@ -17,6 +17,8 @@ v1.5
 | v1.3 | Fix: main menu fully responsive for iPhone (safe areas, dvh) |
 | v1.4 | Balance: projectile base speed 6->3, upgrade steps 6->4 |
 | v1.5 | Feat: Auto-Fire shop upgrade + fix hold state reset |
+| v1.6 | Balance: smoother speed steps (3/5/7/9); shop scroll fix on iPhone |
 | v1.4 | Balance: projectile base speed 6->3, upgrade steps 6->4 |
 | v1.5 | Feat: Auto-Fire shop upgrade + fix hold state reset |
+| v1.6 | Balance: smoother speed steps (3/5/7/9); shop scroll fix on iPhone |
 | v1.4 | Balance: projectile base speed 6→3, upgrade steps 6→4 |
