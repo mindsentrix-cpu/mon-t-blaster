@@ -763,10 +763,9 @@ const UPGRADES = {
   },
   autofire: {
     levels: [
-      { desc: 'Mantén presionado para disparar', cost: 150 },
-      { desc: 'Cadencia doble al mantener',      cost: 300 },
+      { desc: 'Mantén presionado para disparar', cost: 500 },
     ],
-    current: 0, max: 2,
+    current: 0, max: 1,
   },
 };
 
@@ -782,7 +781,7 @@ function getProjectileSpeed()  { return 3 + UPGRADES.speed.current * 2; }
 function getStartLives()       { return 3 + UPGRADES.shield.current; }
 function hasMagnet()           { return UPGRADES.magnet.current > 0; }
 function hasAutoFire()         { return UPGRADES.autofire.current > 0; }
-function getAutoFireRate()     { return UPGRADES.autofire.current >= 2 ? 0.18 : 0.35; }
+function getAutoFireRate()     { return 0.5 - UPGRADES.speed.current * 0.1; } // 0.5 / 0.4 / 0.3 / 0.2s
 
 function renderShop() {
   document.getElementById('shopCoins').textContent = totalCoins;
