@@ -524,6 +524,7 @@ function showCombo() {
 function updateHUD() {
   document.getElementById('scoreVal').textContent = score;
   document.getElementById('coinsNum').textContent = coins;
+  document.getElementById('debugSpd').textContent = 'SPD ' + getProjectileSpeed();
 }
 
 // ─── GAME LOOP ────────────────────────────────────────────────────────────────

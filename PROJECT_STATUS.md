@@ -4,7 +4,7 @@
 https://mindsentrix-cpu.github.io/mon-t-blaster/
 
 ## 📌 Current Version
-v1.9
+v2.0
 
 ## ✅ Completed
 - [2026-03-22] v1.0 — Initial project structure
